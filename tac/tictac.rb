@@ -96,11 +96,27 @@ class Game
 
 end
 
+game = Game.new
+
+
 class Controller
+
+  attr_accessor :view, :game
 
   def initialize
     @view = View.new
     @game = Game.new
+    play
+  end
+
+  def play
+    until @game.game_won?
+      @game.turn_chooser
+      move = @view.choose_square.to_i
+      @game.valid_number(move)
+      @game.print_board
+    end
+    @view.game_over
   end
 
 end
@@ -123,7 +139,11 @@ class View
 
   def choose_square
     puts "Please choose a square between 1 and 9."
+    gets.chomp
+  end
 
+  def game_over
+    puts "The game has been won!"
   end
 
 end
