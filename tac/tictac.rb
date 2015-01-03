@@ -118,17 +118,6 @@ class Game
 
 end
 
-# game = Game.new
-# game.turn_chooser
-# game.update_square(0)
-# game.turn_chooser
-# game.update_square(4)
-# game.turn_chooser
-# game.update_square(8)
-# game.print_board
-# p game.game_won?
-#game won method is broken.  it takes either x's or o's for winning condition.
-#game does not process diagonal wins yet.
 
 class Controller
 
@@ -141,9 +130,10 @@ class Controller
   end
 
   def play
+
     until @game.game_won?
       if @game.tied?
-        puts "The game is tied!"
+        @view.tied
         break
       end
       @game.turn_chooser
@@ -203,6 +193,10 @@ class View
   def game_over(token)
     puts "The game has been won by #{token}!"
     puts "Unless it was tied, then just kidding"
+  end
+
+  def tied
+    puts "The game is tied!"
   end
 
 end
