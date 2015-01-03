@@ -47,17 +47,29 @@ class Game
 
   #look for shorthand on how to make this less onerous
   def game_won?
-    diagonal_win?
-    horizontal_win?
-    vertical_win?
+    if diagonal_win?
+      true
+    elsif horizontal_win?
+      true
+    elsif vertical_win?
+      true
+    else
+      false
+    end
   end
 
   def vertical_win?
-    if board[0] && board[1] && board[2] == 'X' || board[0] && board[1] && board[2] ==  'O'
+    if board[0] && board[1] && board[2] == 'X'
       return true
-    elsif board[3] && board[4] && board[5] == 'X' || board[3] && board[4] && board[5] == 'O'
+    elsif board[0] && board[1] && board[2] ==  'O'
       return true
-    elsif board[6] && board[7] && board[8] == 'X' || board[6] && board[7] && board[8] == 'O'
+    elsif board[3] && board[4] && board[5] == 'X'
+      return true
+    elsif board[3] && board[4] && board[5] == 'O'
+      return true
+    elsif board[6] && board[7] && board[8] == 'X'
+      return true
+    elsif board[6] && board[7] && board[8] == 'O'
       return true
     else
       false
@@ -65,11 +77,17 @@ class Game
   end
 
   def horizontal_win?
-    if board[0] && board[3] && board[6] == 'X' || board[0] && board[3] && board[6] == 'O'
+    if board[0] && board[3] && board[6] == 'X'
       return true
-    elsif board[1] && board[4] && board[7] == 'X' || board[1] && board[4] && board[7] == 'O'
+    elsif board[0] && board[3] && board[6] == 'O'
       return true
-    elsif board[2] && board[5] && board[8] == 'X' || board[2] && board[5] && board[8] == 'O'
+    elsif board[1] && board[4] && board[7] == 'X'
+      return true
+    elsif board[1] && board[4] && board[7] == 'O'
+      return true
+    elsif board[2] && board[5] && board[8] == 'X'
+      return true
+    elsif board[2] && board[5] && board[8] == 'O'
       return true
     else
       false
@@ -77,9 +95,13 @@ class Game
   end
 
   def diagonal_win?
-    if board[0] && board[4] && board[8] == 'X' || board[0] && board[4] && board[8] == 'O'
+    if board[0] && board[4] && board[8] == 'X'
       return true
-    elsif board[2] && board[4] && board[6] == 'X' || board[2] && board[4] && board[6] == 'O'
+    elsif board[0] && board[4] && board[8] == 'O'
+      return true
+    elsif board[2] && board[4] && board[6] == 'X'
+      return true
+    elsif board[2] && board[4] && board[6] == 'O'
       return true
     else
       false
@@ -96,8 +118,17 @@ class Game
 
 end
 
-game = Game.new
-
+# game = Game.new
+# game.turn_chooser
+# game.update_square(0)
+# game.turn_chooser
+# game.update_square(4)
+# game.turn_chooser
+# game.update_square(8)
+# game.print_board
+# p game.game_won?
+#game won method is broken.  it takes either x's or o's for winning condition.
+#game does not process diagonal wins yet.
 
 class Controller
 
@@ -116,7 +147,9 @@ class Controller
       @game.valid_number(move)
       @game.print_board
     end
-    @view.game_over
+
+    current_token = @game.current_token
+    @view.game_over(current_token)
   end
 
 end
@@ -142,8 +175,8 @@ class View
     gets.chomp
   end
 
-  def game_over
-    puts "The game has been won!"
+  def game_over(token)
+    puts "The game has been won by #{token}!"
   end
 
 end
