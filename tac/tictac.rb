@@ -146,8 +146,11 @@ class Controller
       @view.legend
     end
 
-    current_token = @game.current_token
-    @view.game_over(current_token)
+    unless @game.tied?
+      current_token = @game.current_token
+      @view.game_over(current_token)
+    end
+
   end
 
 end
@@ -192,7 +195,6 @@ class View
 
   def game_over(token)
     puts "The game has been won by #{token}!"
-    puts "Unless it was tied, then just kidding"
   end
 
   def tied
