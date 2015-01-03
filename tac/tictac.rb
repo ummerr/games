@@ -59,17 +59,17 @@ class Game
   end
 
   def vertical_win?
-    if board[0] && board[1] && board[2] == 'X'
+    if board[0] == 'X' && board[1] == 'X' && board[2] == 'X'
       return true
-    elsif board[0] && board[1] && board[2] ==  'O'
+    elsif board[0] == 'O' && board[1] == 'O' && board[2] ==  'O'
       return true
-    elsif board[3] && board[4] && board[5] == 'X'
+    elsif board[3] == 'X' && board[4] == 'X' && board[5] == 'X'
       return true
-    elsif board[3] && board[4] && board[5] == 'O'
+    elsif board[3] == 'O' && board[4] == 'O' && board[5] == 'O'
       return true
-    elsif board[6] && board[7] && board[8] == 'X'
+    elsif board[6] == 'X' && board[7] == 'X' && board[8] == 'X'
       return true
-    elsif board[6] && board[7] && board[8] == 'O'
+    elsif board[6] == 'O' && board[7]== 'O'  && board[8] == 'O'
       return true
     else
       false
@@ -77,17 +77,17 @@ class Game
   end
 
   def horizontal_win?
-    if board[0] && board[3] && board[6] == 'X'
+    if board[0] == 'X' && board[3] == 'X' && board[6] == 'X'
       return true
-    elsif board[0] && board[3] && board[6] == 'O'
+    elsif board[0] == 'O' && board[3] == 'O' && board[6] == 'O'
       return true
-    elsif board[1] && board[4] && board[7] == 'X'
+    elsif board[1] == 'X' && board[4] == 'X' && board[7] == 'X'
       return true
-    elsif board[1] && board[4] && board[7] == 'O'
+    elsif board[1] == 'O' && board[4] == 'O' && board[7] == 'O'
       return true
-    elsif board[2] && board[5] && board[8] == 'X'
+    elsif board[2] == 'X' && board[5] == 'X' && board[8] == 'X'
       return true
-    elsif board[2] && board[5] && board[8] == 'O'
+    elsif board[2] == 'O' && board[5] == 'O' && board[8] == 'O'
       return true
     else
       false
@@ -95,13 +95,13 @@ class Game
   end
 
   def diagonal_win?
-    if board[0] && board[4] && board[8] == 'X'
+    if board[0] == 'X' && board[4] == 'X' && board[8] == 'X'
       return true
-    elsif board[0] && board[4] && board[8] == 'O'
+    elsif board[0] == 'O' && board[4] == 'O' && board[8] == 'O'
       return true
-    elsif board[2] && board[4] && board[6] == 'X'
+    elsif board[2] == 'X' && board[4] == 'X' && board[6] == 'X'
       return true
-    elsif board[2] && board[4] && board[6] == 'O'
+    elsif board[2] == 'O' && board[4] == 'O' && board[6] == 'O'
       return true
     else
       false
@@ -145,7 +145,9 @@ class Controller
       @game.turn_chooser
       move = @view.choose_square.to_i
       @game.valid_number(move)
+      @view.current_board
       @game.print_board
+      @view.legend
     end
 
     current_token = @game.current_token
@@ -170,8 +172,22 @@ class View
     puts " 7 | 8 | 9 "
   end
 
+  def current_board
+    puts "---------------------------------------"
+    puts "the board looks like this"
+  end
+
+  def legend
+    puts "remember the keys to the board are"
+    puts " 1 | 2 | 3 "
+    puts " --------- "
+    puts " 4 | 5 | 6 "
+    puts " --------- "
+    puts " 7 | 8 | 9 "
+  end
+
   def choose_square
-    puts "Please choose a square between 1 and 9."
+    puts "Player - please choose a square between 1 and 9."
     gets.chomp
   end
 
