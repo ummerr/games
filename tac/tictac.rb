@@ -142,7 +142,13 @@ class Controller
 
   def play
     until @game.game_won?
+      if @game.tied?
+        puts "The game is tied!"
+        break
+      end
       @game.turn_chooser
+      token = @game.current_token
+      @view.player_prompt(token)
       move = @view.choose_square.to_i
       @game.valid_number(move)
       @view.current_board
@@ -186,13 +192,17 @@ class View
     puts " 7 | 8 | 9 "
   end
 
+  def player_prompt(token)
+    puts "Player #{token} please choose an available square"
+  end
+
   def choose_square
-    puts "Player - please choose a square between 1 and 9."
     gets.chomp
   end
 
   def game_over(token)
     puts "The game has been won by #{token}!"
+    puts "Unless it was tied, then just kidding"
   end
 
 end
